@@ -1,23 +1,26 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import { FaPlus } from 'react-icons/fa';
+import Note from './Note.js';
 import './App.css';
 
 function App() {
+  const [notes, setNotes] = useState([]);
+
+  const addNewNote = () => {
+    setNotes([...notes, { id: notes.length + 1, text: '' }]);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button type="button" className="add" onClick={addNewNote}>
+        <FaPlus /> Add note
+      </button>
+      <div className='container-notes'>
+        {notes.length > 0 &&
+          notes.map((note) => (
+            <Note key={note.id} note={note} notes={notes} setNotes={setNotes} />
+          ))}
+      </div>
     </div>
   );
 }
